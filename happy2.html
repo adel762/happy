@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إلى نور قلبي 🤍   </title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;600;700&family=Reem+Kufi:wght@500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: radial-gradient(circle at center, #2a1b15 0%, #140b08 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* 3D Perspective setup */
+        .card-container {
+            perspective: 1200px;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 420px;
+            height: 580px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+        }
+
+        .card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 
+                        0 0 30px rgba(212, 175, 55, 0.2);
+            overflow: hidden;
+            border: 2px solid rgba(212, 175, 55, 0.4);
+            background: #faf8f3;
+        }
+
+        /* Front Face Style */
+        .card-front {
+            background-color: #faf8f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 24px;
+        }
+
+        /* Back Face Style */
+        .card-back {
+            transform: rotateY(180deg);
+            background: linear-gradient(135deg, #fdfbf7 0%, #f4eee2 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 32px 28px;
+            color: #3d2b1f;
+        }
+
+        /* Gold Foil Effect for Text & Borders */
+        .gold-text {
+            background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 25%, #b38728 50%, #fbf5b7 75%, #aa771c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gold-border {
+            border: 1px solid transparent;
+            border-image: linear-gradient(to bottom right, #bf953f, #fcf6ba, #aa771c) 1;
+        }
+
+        /* Floating particles canvas */
+        #particles-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .amiri-font {
+            font-family: 'Amiri', serif;
+        }
+
+        .kufi-font {
+            font-family: 'Reem Kufi', sans-serif;
+        }
+
+        /* Subtle Pulse animation for hint button */
+        @keyframes subtlePulse {
+            0%, 100% { opacity: 0.85; transform: translateY(0); }
+            50% { opacity: 1; transform: translateY(-4px); }
+        }
+
+        .pulse-hint {
+            animation: subtlePulse 2.5s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center p-4 relative">
+
+    <!-- Particle Background Canvas -->
+    <canvas id="particles-canvas"></canvas>
+
+    <!-- Main Container -->
+    <div class="relative z-10 w-full max-w-md flex flex-col items-center">
+
+        <!-- Title Header -->
+        <div class="text-center mb-6">
+            <h1 class="text-2xl md:text-3xl gold-text kufi-font font-bold mb-1 tracking-wide drop-shadow-md">
+                رسالة   من القلب 🤍🤍
+            </h1>
+        </div>
+
+        <!-- 3D Card Container -->
+        <div class="card-container w-full flex justify-center">
+            <div id="interactiveCard" class="card" onclick="flipCard()">
+                
+                <!-- FRONT OF THE CARD -->
+                <div class="card-face card-front relative">
+                    <!-- Inner Ornamental Gold Border -->
+                    <div class="absolute inset-3 border-2 border-amber-500/30 rounded-xl pointer-events-none flex flex-col justify-between p-2">
+                        <div class="flex justify-between text-amber-600/50 text-xs">𓋹</div>
+                        <div class="flex justify-between text-amber-600/50 text-xs self-end">𓋹</div>
+                    </div>
+
+                    <!-- Cartouches Image Container -->
+                    <div class="w-full flex-1 flex flex-col items-center justify-center pt-2">
+                        <!-- High quality replica of user's cartouche image -->
+                        <div class="relative w-full max-w-[280px] rounded-lg overflow-hidden shadow-sm transition-transform duration-500 hover:scale-[1.02]">
+                            <img 
+                                src="nnn.jpeg" 
+                                onerror="this.onerror=null; this.src='https://placehold.co/400x500/faf8f5/b38728?text=%D9%85%D8%AD%D9%85%D8%AF+%D9%88+%D9%86%D9%88%D8%B1';"
+                                alt="محمد ونور - خراطيش فرعونية" 
+                                class="w-full h-auto object-contain rounded-lg"
+                            />
+                        </div>
+                    </div>
+
+                    <!-- Front Footer Hint -->
+                    <div class="mt-4 pb-2 text-center pulse-hint">
+                        <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-800 text-xs font-semibold shadow-sm">
+                             
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- BACK OF THE CARD -->
+                <div class="card-face card-back relative">
+                    <!-- Inner Ornamental Border -->
+                    <div class="absolute inset-3 border border-amber-600/30 rounded-xl pointer-events-none"></div>
+
+                    <!-- Header Symbol -->
+                    <div class="text-center pt-2">
+                        <div class="text-2xl text-amber-600 mb-1"></div>
+                        <h2 class="text-2xl font-bold amiri-font gold-text mb-2">إلى نور.. أغلى ما في حياتي 🤍</h2>
+                        <div class="w-16 h-0.5 bg-gradient-to-r from-transparent via-amber-500 to-transparent mx-auto"></div>
+                    </div>
+
+                    <!-- Main Romantic Message Body -->
+                    <div class="text-center my-auto px-2 space-y-4 leading-relaxed">
+                        <p class="amiri-font text-lg text-amber-950/90 font-medium leading-loose">
+                            يمكن الرموز والنقوش الذهبية دي تعبر عن أسمائنا، بس المشاعر اللي جوايا أكبر بكتير من أي كلام ممكن يتكتب
+                        </p>
+                        <p class="amiri-font text-base text-stone-700 leading-relaxed">
+من يوم ما دخلتي حياتي وأنتِ فعلاً اللي بيهون عليا كل حاجة، والضحكة اللي بتطمن قلبي. وجودك جنبي مش مجرد صدفة.. ده أجمل رزق ربنا أنعم عليا بيه                        </p>
+                        <p class="amiri-font text-base text-stone-700 leading-relaxed font-semibold">
+أوعدك إني أكون ليكي دايماً السند والسكن، وأفضل أحبك وأحافظ عليكي كل يوم أكتير من اللي قبله                        </p>
+                        <p class="amiri-font text-base text-stone-700 leading-relaxed">
+                            ربنا يخليكي ليا وما يحرمنيش منك أبداً يا نور عيني 🤍
+                        </p>
+
+                    </div>
+
+                    <!-- Signature Footer -->
+                    <div class="text-center pb-2">
+                        <div class="w-12 h-0.5 bg-gradient-to-r from-transparent via-amber-500 to-transparent mx-auto mb-3"></div>
+                        <p class="kufi-font text-sm text-amber-900 font-bold">
+                            مع كل حبي، <span class="text-amber-700 text-base">محمّد 🤍</span>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- External Interactive Controls -->
+        <div class="mt-8 flex gap-3">
+            <button onclick="flipCard()" class="px-6 py-2.5 rounded-full bg-gradient-to-r from-amber-600 via-amber-500 to-amber-700 text-white font-semibold text-sm shadow-lg hover:brightness-110 active:scale-95 transition-all flex items-center gap-2 border border-amber-300/30">
+                
+
+            </button>
+        </div>
+
+    </div>
+
+    <!-- JavaScript for Interactions and Background Particles -->
+    <script>
+        // Flip Card Functionality
+        function flipCard() {
+            const card = document.getElementById('interactiveCard');
+            card.classList.toggle('flipped');
+        }
+
+        // Golden Particles Animation
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let particles = [];
+        const particleCount = 45;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2.5 + 0.5;
+                this.speedY = Math.random() * -0.6 - 0.2;
+                this.speedX = (Math.random() - 0.5) * 0.4;
+                this.opacity = Math.random() * 0.7 + 0.2;
+                this.fade = Math.random() * 0.005 + 0.002;
+            }
+
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX;
+                this.opacity -= this.fade;
+
+                if (this.opacity <= 0 || this.y < 0) {
+                    this.reset();
+                    this.y = canvas.height + 10;
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(238, 206, 126, ${this.opacity})`;
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = '#d4af37';
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+
+        initParticles();
+        animateParticles();
+    </script>
+</body>
+</html>
